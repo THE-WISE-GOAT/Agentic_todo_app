@@ -6,19 +6,17 @@ This repository contains a lightweight, functional Todo application developed as
 The application architecture cleanly decouples standard, deterministic CRUD features from an intelligent AI layer. It features a robust **FastAPI backend**, a modern and minimal **Streamlit frontend**, and an advanced **LangGraph-driven orchestrator** that uses a local Large Language Model (LLM) to convert unstructured natural language commands into structured database operations.
 
 ---
-
 ## Architectural Deep-Dive: How the Agentic AI Works
 Instead of relying on rigid, regex-based parsing, this project implements a dynamic **ReAct (Reasoning and Action) Architecture** using `langgraph`.
 
 ```mermaid
 flowchart TD
-	U[User Command] --> LG[LangGraph State]
-	LG --> LLM[LLM Agent Node (Qwen2.5)]
-	LLM --> D{Decides next move}
-	D -->|Direct Answer| End[End]
-	D -->|Tool Call Triggered| T[ToolNode Execution\n(Create, Update, Complete, etc.)]
-	T --> LLM
-	T --> End
+    U[User Command] --> LG[LangGraph State]
+    LG --> LLM["LLM Agent Node (Qwen2.5)"]
+    LLM --> D{Decides next move}
+    D -->|Direct Answer| End[End]
+    D -->|Tool Call Triggered| T["ToolNode Execution (Create, Update, Complete, etc.)"]
+    T --> LLM
 ```
 
 1. **State Engine (`TodoAgentState`):** The app builds a standard state track (`messages`) passed from node to node using LangGraph’s message reducers.
