@@ -8,25 +8,17 @@ The application architecture cleanly decouples standard, deterministic CRUD feat
 ---
 
 ## Architectural Deep-Dive: How the Agentic AI Works
-Instead of relying on rigid, regex-based parsing, this project implements a dynamic **ReAct (Reasoning and Action) Architecture** using `langgraph`. 
+Instead of relying on rigid, regex-based parsing, this project implements a dynamic **ReAct (Reasoning and Action) Architecture** using `langgraph`.
 
-
-```
-
-[ User Command ] ──> [ LangGraph State ] ──> [ LLM Agent Node (Qwen2.5) ]
-│
-(Decides next move)
-│
-┌────────────────────────────────────────────┴────────────────────────────────────────────┐
-▼                                                                                         ▼
-[ Direct Answer ] ──> [ End ]                                                           [ Tool Call Triggered ]
-│
-[ ToolNode Execution ]
-(Create, Update, Complete, etc.)
-│
-▼
-[ Loop Back to Agent Node ]
-
+```mermaid
+flowchart TD
+	U[User Command] --> LG[LangGraph State]
+	LG --> LLM[LLM Agent Node (Qwen2.5)]
+	LLM --> D{Decides next move}
+	D -->|Direct Answer| End[End]
+	D -->|Tool Call Triggered| T[ToolNode Execution\n(Create, Update, Complete, etc.)]
+	T --> LLM
+	T --> End
 ```
 
 1. **State Engine (`TodoAgentState`):** The app builds a standard state track (`messages`) passed from node to node using LangGraph’s message reducers.
