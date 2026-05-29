@@ -1,6 +1,3 @@
-
-```markdown
-
 # Todo App — Agentic AI Workshop Project
 
 ## Overview
