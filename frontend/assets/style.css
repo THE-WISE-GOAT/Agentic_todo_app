@@ -1,0 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, .stApp {
+    background-color: #181614 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    color: #ffffff !important;
+}
+
+/* ── Layout ──────────────────────────────── */
+.block-container {
+    max-width: 1100px !important;
+    padding: 3rem 2.5rem 5rem !important;
+    background: transparent !important;
+    margin: 0 auto !important;
+}
+
+/* ── Header ──────────────────────────────── */
+.app-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.8rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #252118;
+}
+.app-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.2rem;
+    color: #ffffff;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+}
+.app-title em {
+    font-style: italic;
+    color: #c49a6c;
+}
+.app-meta {
+    text-align: right;
+}
+.app-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: #d6cdb8;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.9;
+}
+
+/* ── Stats ───────────────────────────────── */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.8rem;
+}
+.stat-card {
+    background: #1f1c18;
+    border: 1px solid #2a2520;
+    border-radius: 12px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+}
+.stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: #c49a6c;
+    line-height: 1;
+    display: block;
+}
+.stat-num.all { color: #7a6a5a; }
+.stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: #d0c6b8;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+/* ── Progress ────────────────────────────── */
+.progress-wrap { margin-bottom: 2rem; }
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: #d0c6b8;
+    font-weight: 300;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.45rem;
+}
+.progress-track {
+    height: 3px;
+    background: #252118;
+    border-radius: 99px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7a4e28 0%, #c49a6c 100%);
+    border-radius: 99px;
+}
+
+/* ── Command bar ─────────────────────────── */
+.cmd-section { margin-bottom: 0.6rem; }
+.cmd-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #d0c6b8;
+    margin-bottom: 0.6rem;
+    display: block;
+}
+.cmd-hint {
+    margin-top: 0.7rem;
+    line-height: 2;
+}
+.cmd-hint span {
+    display: inline-block;
+    background: #252118;
+    border: 1px solid #2e2920;
+    border-radius: 4px;
+    padding: 1px 7px;
+    margin: 2px 2px;
+    color: #e6dfcf;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 300;
+}
+
+/* ── Filter pills ────────────────────────── */
+.filter-section { margin-bottom: 1.2rem; }
+.filter-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #d0c6b8;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+.pill {
+    display: inline-block;
+    background: #1f1c18;
+    border: 1px solid #2a2520;
+    border-radius: 99px;
+    padding: 0.22rem 0.65rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: #d0c6b8;
+    cursor: pointer;
+    transition: all 0.12s;
+    user-select: none;
+}
+.pill:hover { border-color: #38322a; color: #f5efe4; }
+.pill.active {
+    background: #c49a6c;
+    color: #181614;
+    border-color: #c49a6c;
+    font-weight: 500;
+}
+
+/* ── Streamlit input overrides ───────────── */
+.stTextInput > div > div > input {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 1rem !important;
+    color: #ffffff !important;
+    background: #252118 !important;
+    border: 1.5px solid #322c24 !important;
+    border-radius: 9px !important;
+    padding: 0.78rem 1rem !important;
+    box-shadow: none !important;
+    transition: border-color 0.15s !important;
+}
+.stTextInput > div > div > input:focus {
+    border-color: #c49a6c !important;
+    box-shadow: 0 0 0 3px rgba(196,154,108,0.09) !important;
+    outline: none !important;
+}
+.stTextInput > div > div > input::placeholder { color: #3e3528 !important; }
+
+/* ── Buttons ─────────────────────────────── */
+.stButton > button {
+    font-family: 'DM Sans', sans-serif !important;
+    font-weight: 500 !important;
+    border-radius: 9px !important;
+    transition: all 0.13s ease !important;
+    cursor: pointer !important;
+}
+.stButton > button[kind="primary"] {
+    background: #c49a6c !important;
+    color: #181614 !important;
+    border: none !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    padding: 0.78rem 1rem !important;
+    letter-spacing: 0.01em !important;
+}
+.stButton > button[kind="primary"]:hover {
+    background: #d4aa7c !important;
+    box-shadow: 0 4px 16px rgba(196,154,108,0.22) !important;
+    transform: translateY(-1px) !important;
+}
+.stButton > button:not([kind]),
+.stButton > button[kind="secondary"] {
+    background: transparent !important;
+    color: #e6dfcf !important;
+    border: 1px solid #252118 !important;
+    font-size: 1rem !important;
+    padding: 0.38rem 0.58rem !important;
+    min-height: unset !important;
+}
+.stButton > button:not([kind]):hover,
+.stButton > button[kind="secondary"]:hover {
+    background: #252118 !important;
+    color: #f5efe4 !important;
+    border-color: #322c24 !important;
+}
+
+/* ── Divider ─────────────────────────────── */
+hr {
+    border: none !important;
+    border-top: 1px solid #252118 !important;
+    margin: 1.6rem 0 !important;
+}
+
+/* ── Section header ──────────────────────── */
+.list-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+}
+.list-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+.list-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.67rem;
+    color: #d0c6b8;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+}
+
+/* ── Todo cards ──────────────────────────── */
+.todo-card {
+    background: #1f1c18;
+    border: 1px solid #2a2520;
+    border-radius: 11px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.6rem;
+    transition: border-color 0.12s, background 0.12s;
+}
+.todo-card:hover { border-color: #38322a; background: #222019; }
+.todo-card.done {
+    background: #1b1915;
+    border-color: #232019;
+    opacity: 0.55;
+}
+.todo-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    font-weight: 300;
+    color: #d0c6b8;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.28rem;
+}
+.todo-text {
+    font-size: 1.02rem;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.5;
+}
+.todo-text.done {
+    text-decoration: line-through;
+    color: #bfb6a6;
+}
+
+/* ── Todo metadata row ───────────────────── */
+.todo-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.45rem;
+}
+.todo-badge {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+.badge-priority-high {
+    background: rgba(220, 80, 60, 0.15);
+    color: #e87a6a;
+    border-color: rgba(220, 80, 60, 0.3);
+}
+.badge-priority-medium {
+    background: rgba(210, 160, 80, 0.15);
+    color: #d4a04c;
+    border-color: rgba(210, 160, 80, 0.3);
+}
+.badge-priority-low {
+    background: rgba(100, 160, 220, 0.15);
+    color: #6ea8d8;
+    border-color: rgba(100, 160, 220, 0.3);
+}
+.badge-category {
+    background: rgba(200, 200, 200, 0.08);
+    color: #a09890;
+    border-color: rgba(200, 200, 200, 0.15);
+}
+.badge-due {
+    background: rgba(196, 154, 108, 0.12);
+    color: #c49a6c;
+    border-color: rgba(196, 154, 108, 0.25);
+}
+
+/* ── Empty state ─────────────────────────── */
+.empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+.empty-icon { font-size: 2rem; display: block; margin-bottom: 0.9rem; opacity: 0.25; }
+.empty-text { font-size: 0.9rem; font-style: italic; color: #d0c6b8; }
+
+/* ── All-done message ────────────────────── */
+.all-done {
+    text-align: center;
+    padding: 1.8rem 0 0;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: #d0c6b8;
+}
+
+/* ── Alerts ──────────────────────────────── */
+div[data-testid="stAlert"] {
+    border-radius: 9px !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.9rem !important;
+}
+
+/* ── Forms ───────────────────────────────── */
+div[data-testid="stForm"] {
+    background: #1b1915 !important;
+    border: 1px solid #252118 !important;
+    border-radius: 11px !important;
+    padding: 1.1rem !important;
+}
+.stFormSubmitButton > button {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.87rem !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+}
+
+/* ── Expander ────────────────────────────── */
+div[data-testid="stExpander"] {
+    border: 1px solid #252118 !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+}
+div[data-testid="stExpander"] summary {
+    color: #d0c6b8 !important;
+    font-size: 0.8rem !important;
+    font-family: 'DM Mono', monospace !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* ── Column padding ──────────────────────── */
+[data-testid="column"] { padding: 0 0.2rem !important; }
+
+/* ── Hide Streamlit chrome ───────────────── */
+#MainMenu, footer, header { visibility: hidden; }
+
+/* ── Toast / loading overlay ─────────────── */
+.agent-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    background: #1f1c18;
+    border: 1px solid #2a2520;
+    border-radius: 9px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: #d0c6b8;
+    margin-bottom: 0.8rem;
+}
+.agent-loading::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid #c49a6c;
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
