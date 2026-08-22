@@ -1,18 +1,23 @@
 # Core runtime
-fastapi>=0.95
-uvicorn[standard]>=0.22
-streamlit>=1.24
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+streamlit==1.41.1
 
 # HTTP / networking
-httpx>=0.24
-requests>=2.31
+httpx==0.28.1
+requests==2.32.3
 
-langchain>=0.0.300
-langchain-ollama>=0.0.6
-langgraph>=0.2.0
+# LangChain / LangGraph
+langchain==0.3.13
+langchain-ollama==0.2.0
+langgraph==0.2.60
 
-# Persistence / vector DB (optional)
-chromadb>=0.3.30
+# Database
+sqlmodel==0.0.22
+sqlalchemy==2.0.36
+
+# Fuzzy matching
+thefuzz==0.22.1
 
 # Convenience
-python-dotenv>=1.0
+python-dotenv==1.0.1
