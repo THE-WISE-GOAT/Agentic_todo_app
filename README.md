@@ -14,7 +14,7 @@ uvicorn backend.main:app --reload
 
 Open <http://localhost:8000>. The database and tables are created on first start.
 
-`make install` and `make run` do the same thing.
+Use the commands above to install dependencies and start the server.
 
 ## The Ask tab
 
