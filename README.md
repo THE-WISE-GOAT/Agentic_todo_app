@@ -1,95 +1,92 @@
-# Agentic Todo App
+# Things to do
 
-A production-ready, AI-powered todo application with a FastAPI backend, Streamlit frontend, and LangGraph agentic layer.
+A small todo app. FastAPI and SQLite behind it, plain HTML/CSS/JS in front, and an optional
+Ollama agent that understands sentences like "move the essay to Friday".
 
-## Architecture
-
-```
-├── backend/
-│   ├── main.py          # FastAPI REST API
-│   ├── models.py        # SQLModel schemas
-│   ├── database.py      # SQLite engine & session management
-│   └── agent/
-│       ├── graph.py     # LangGraph state machine
-│       └── tools.py     # Agent tool implementations (with fuzzy matching)
-├── frontend/
-│   ├── app.py           # Streamlit UI
-│   └── assets/
-│       └── style.css    # Dark theme stylesheet
-├── todos.db             # SQLite database (auto-created)
-├── requirements.txt
-└── README.md
-```
-
-## Prerequisites
-
-- **Python:** 3.10+
-- **Ollama:** Local LLM runtime (for natural language processing)
-
-## Setup
-
-### 1. Virtual Environment
+## Run it
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-```
-
-### 2. Install Dependencies
-
-```bash
 pip install -r requirements.txt
+uvicorn backend.main:app --reload
 ```
 
-### 3. Ollama Model
+Open <http://localhost:8000>. The database and tables are created on first start.
+
+`make install` and `make run` do the same thing.
+
+## The Ask tab
+
+The command bar needs [Ollama](https://ollama.com) running locally:
 
 ```bash
+ollama serve
 ollama pull qwen2.5:3b
 ```
 
-## Running the Application
+Everything else in the app works without it. If Ollama is down, the Ask tab says so instead of
+hanging, and you can add or edit tasks by hand.
 
-### Backend
+Example commands:
 
-```bash
-cd backend
-uvicorn main:app --reload --port 8000
+- `add call the dentist tomorrow, high priority`
+- `mark the essay as done`
+- `move groceries to Personal`
+- `delete everything under watchlist`
+- `clear all`
+
+## Configuration
+
+Copy `.env.example` to `.env` if you want to change the database path or the model:
+
+| Variable | Default | Used for |
+| --- | --- | --- |
+| `DATABASE_URL` | `sqlite:///./todos.db` | Database location |
+| `OLLAMA_BASE_URL` | `http://localhost:11434` | Agent host |
+| `OLLAMA_MODEL` | `qwen2.5:3b` | Model name |
+| `CORS_ORIGINS` | empty | Extra allowed origins, comma-separated |
+
+## Layout
+
+```
+backend/
+  main.py         app setup, static files
+  config.py       environment settings
+  database.py     engine and sessions
+  models.py       Todo table and enums
+  schemas.py      request/response models
+  services.py     queries shared by the API and agent
+  routes/         todos, agent and system endpoints
+  agent/
+    graph.py      LangGraph agent and Ollama check
+    tools.py      tools the agent calls
+frontend/
+  index.html
+  assets/         app.css, app.js, favicon
 ```
 
-### Frontend
+## API
 
-```bash
-cd frontend
-streamlit run app.py
-```
+All endpoints live under `/api`. Interactive docs at `/api/docs`.
 
-The app will be available at `http://localhost:8501`. API docs at `http://localhost:8000/docs`.
+| Method | Path | Notes |
+| --- | --- | --- |
+| GET | `/api/todos` | `status`, `category`, `q`, `sort` params |
+| POST | `/api/todos` | `text`, optional `priority`, `category`, `due_date` |
+| GET | `/api/todos/{id}` | |
+| PATCH | `/api/todos/{id}` | Send only the fields you change |
+| DELETE | `/api/todos/{id}` | |
+| DELETE | `/api/todos` | Clears everything; `?status=done` clears only finished tasks |
+| POST | `/api/agent/command` | `{"command": "..."}` |
+| GET | `/api/stats` | totals for the header |
+| GET | `/api/meta` | priorities, categories, agent status |
+| GET | `/api/health` | database and agent check |
 
-## Features
+`due_date` is a plain `YYYY-MM-DD` date. `created_at` is local time.
 
-- **CRUD Operations:** Create, read, update, delete todos via UI or API
-- **AI Agent:** Natural language command processing via LangGraph + Ollama
-- **Fuzzy Matching:** Smart text-based search for update/delete commands
-- **Rich Schema:** Priority, due dates, categories
-- **Filtering:** Filter todos by category and completion status
-- **Dark Theme:** Sleek, minimal UI
+## Notes
 
-## API Endpoints
-
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/todos` | List all todos |
-| POST | `/todos` | Create a todo |
-| GET | `/todos/{id}` | Get a specific todo |
-| PUT | `/todos/{id}` | Update a todo |
-| DELETE | `/todos/{id}` | Delete a todo |
-| DELETE | `/todos` | Delete all todos |
-| POST | `/todos/process-command` | Process natural language command |
-
-## Natural Language Commands
-
-- **Create:** `"add buy groceries"`, `"remind me to call the dentist tomorrow"`
-- **Complete:** `"complete #1"`, `"mark todo 2 as done"`
-- **Update:** `"edit #1 to read matching slides"`
-- **Delete:** `"remove eggs"`, `"delete #3"`, `"delete all"`
-- **Compound:** `"add X and delete Y"`
+- The SQLite file is `todos.db` in the repo root and is gitignored. Delete it to start over.
+- Deleting a task from the UI shows an undo toast for five seconds.
+- Keyboard: `n` for a new task, `/` to search, `Esc` to cancel an edit.
