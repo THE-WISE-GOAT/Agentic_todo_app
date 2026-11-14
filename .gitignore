@@ -1,51 +1,38 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-.venv/
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Distribution / packaging
-dist/
-build/
 *.egg-info/
 .eggs/
+build/
+dist/
 
-# Testing
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local config
+.env
+.env.*
+!.env.example
+
+# SQLite
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Tool caches
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
 .coverage
 htmlcov/
+*.log
 
-#ds_store/
+# Editors and OS
+.idea/
+.vscode/
+*.swp
 .DS_Store
+Thumbs.db
