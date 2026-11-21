@@ -1,8 +1,9 @@
 from __future__ import annotations
-from sqlmodel import SQLModel, Field
+
+from datetime import date, datetime
 from enum import Enum
-from datetime import datetime
-from typing import Optional
+
+from sqlmodel import Field, SQLModel
 
 
 class Priority(str, Enum):
@@ -20,26 +21,16 @@ class Category(str, Enum):
     GENERAL = "General"
 
 
+def now() -> datetime:
+    # Naive local time keeps dates readable in the UI and simple in SQLite.
+    return datetime.now()
+
+
 class Todo(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    text: str
-    completed: bool = Field(default=False)
-    created_at: str = Field(default_factory=lambda: datetime.now().isoformat())
+    text: str = Field(max_length=500)
+    completed: bool = Field(default=False, index=True)
+    created_at: datetime = Field(default_factory=now, index=True)
     priority: Priority = Field(default=Priority.MEDIUM)
-    due_date: str | None = None
-    category: Category = Field(default=Category.GENERAL)
-
-
-class TodoCreate(SQLModel):
-    text: str
-    priority: Priority | None = Priority.MEDIUM
-    due_date: str | None = None
-    category: Category | None = Category.GENERAL
-
-
-class TodoUpdate(SQLModel):
-    text: str | None = None
-    completed: bool | None = None
-    priority: Priority | None = None
-    due_date: str | None = None
-    category: Category | None = None
+    due_date: date | None = None
+    category: Category = Field(default=Category.GENERAL, index=True)
