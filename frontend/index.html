@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Things to do</title>
+  <meta name="description" content="A small todo list with a natural language command bar.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+  <div class="app">
+    <header class="masthead">
+      <div class="masthead-title">
+        <h1>things <em>to do</em></h1>
+        <p class="dateline"><span id="today">—</span><span class="dot">·</span><span id="headline">loading</span></p>
+      </div>
+      <dl class="scoreboard" aria-label="Summary">
+        <div><dt>open</dt><dd id="stat-open">0</dd></div>
+        <div><dt>done</dt><dd id="stat-done">0</dd></div>
+        <div><dt>overdue</dt><dd id="stat-overdue" class="is-alert">0</dd></div>
+      </dl>
+    </header>
+
+    <section class="composer" aria-label="New task">
+      <div class="composer-head">
+        <div class="switch" role="tablist" aria-label="Composer mode">
+          <button type="button" role="tab" id="mode-add" aria-selected="true" aria-controls="pane-add" class="is-active">New task</button>
+          <button type="button" role="tab" id="mode-command" aria-selected="false" aria-controls="pane-command">Ask</button>
+        </div>
+        <span class="agent-state" id="agent-state" hidden></span>
+      </div>
+
+      <div id="pane-add" role="tabpanel" aria-labelledby="mode-add">
+        <form id="add-form" class="add-form" autocomplete="off">
+          <label class="sr-only" for="new-text">Task</label>
+          <input id="new-text" name="text" class="text-input" type="text" maxlength="500" placeholder="what needs doing?" required>
+          <div class="add-fields">
+            <label class="sr-only" for="new-priority">Priority</label>
+            <select id="new-priority" name="priority"></select>
+            <label class="sr-only" for="new-category">Category</label>
+            <select id="new-category" name="category"></select>
+            <label class="sr-only" for="new-due">Due date</label>
+            <input id="new-due" name="due_date" type="date" title="Due date">
+            <button class="btn btn-primary" type="submit">add</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="pane-command" role="tabpanel" aria-labelledby="mode-command" hidden>
+        <form id="command-form" class="add-form" autocomplete="off">
+          <label class="sr-only" for="command-input">Command</label>
+          <input id="command-input" class="text-input" type="text" maxlength="500" placeholder="add call the dentist tomorrow, then mark #2 done">
+          <div class="command-row">
+            <p class="hint">Try
+              <button type="button" class="hint-chip" data-command="call the dentist tomorrow">call the dentist tomorrow</button>
+              <button type="button" class="hint-chip" data-command="move my essay to University, high priority">move my essay to University</button>
+            </p>
+            <button class="btn btn-primary" id="command-submit" type="submit">run</button>
+          </div>
+        </form>
+        <p class="command-result" id="command-result" role="status" hidden></p>
+      </div>
+    </section>
+
+    <div class="progress" id="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <p class="progress-label" id="progress-label">—</p>
+    </div>
+
+    <section class="toolbar" aria-label="Filters">
+      <div class="tabs" role="tablist" aria-label="Status">
+        <button type="button" role="tab" class="tab is-active" data-status="open" aria-selected="true">open <span id="count-open">0</span></button>
+        <button type="button" role="tab" class="tab" data-status="done" aria-selected="false">done <span id="count-done">0</span></button>
+        <button type="button" role="tab" class="tab" data-status="all" aria-selected="false">all <span id="count-all">0</span></button>
+      </div>
+      <div class="filters">
+        <label class="sr-only" for="search">Search</label>
+        <input id="search" type="search" placeholder="search" autocomplete="off">
+        <label class="sr-only" for="filter-category">Category</label>
+        <select id="filter-category"><option value="">all categories</option></select>
+        <label class="sr-only" for="sort">Sort</label>
+        <select id="sort">
+          <option value="newest">newest</option>
+          <option value="due">due date</option>
+          <option value="priority">priority</option>
+        </select>
+      </div>
+    </section>
+
+    <main>
+      <ul class="list" id="list" aria-live="polite"></ul>
+      <div class="empty" id="empty" hidden>
+        <p class="empty-title" id="empty-title">nothing here</p>
+        <p class="empty-body" id="empty-body">add a task above to get going.</p>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <p><kbd>n</kbd> new task <span class="dot">·</span> <kbd>/</kbd> search <span class="dot">·</span> <kbd>esc</kbd> cancel</p>
+      <button type="button" class="link-btn" id="clear-done">clear done</button>
+    </footer>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+  <script src="/assets/app.js"></script>
+</body>
+</html>
