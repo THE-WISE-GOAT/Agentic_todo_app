@@ -33,4 +33,4 @@ def health_route():
         database = "ok"
     except Exception:
         database = "unavailable"
-    return {"status": "ok", "database": database, "agent": agent_status()}
+    return {"status": "ok" if database == "ok" else "degraded", "database": database, "agent": agent_status()}
