@@ -15,6 +15,4 @@ def command_route(payload: CommandRequest):
         return run_command(payload.command)
     except AgentUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
-    except Exception as exc:
-        log.exception("Agent command failed")
-        raise HTTPException(status_code=500, detail=f"Agent error: {exc}") from exc
+        raise HTTPException(status_code=500, detail="Agent command failed") from exc
